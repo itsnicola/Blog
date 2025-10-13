@@ -14,6 +14,8 @@ subtitle: A sapphic budget travel guide
 
 {% set mostRecent = collections.posts[collections.posts.length - 1] %}
 
-<h1>Latest Post</h1>
-{{ mostRecent.data.title | safe }}
-{{ mostRecent.templateContent | safe}}
+<div class="post">
+    <div class="postLabel"><h2>Latest Post</h2></div>
+    {{ mostRecent.data.title | safe }}
+    {{ mostRecent.templateContent | safe}}
+</div>
