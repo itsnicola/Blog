@@ -14,15 +14,17 @@ subtitle: A sapphic budget travel guide
 
 {% set mostRecent = collections.posts[collections.posts.length - 1] %}
 
-<div class="post">
-    <div class="postLabelContainer">
-        <span class="postLabel"><h2>Latest Post</h2></span>
-        <div class="imageContainer"><img src="{{ mostRecent.data.image | safe }}" /> </div>
-    </div>
-    <div class="postContent">
-        <h3>{{ mostRecent.data.title | safe }}</h3>
-        <h4>{{ mostRecent.data.author | safe }}</h4>
-        {# <h4>{{ mostRecent.date | date("MMMM d, yyyy") }}</h4> #}
-        {{ mostRecent.templateContent | safe}}
+<div class="postContainer">
+    <div class="post">
+        <div class="postLabelContainer">
+            <span class="postLabel"><h2>Latest Post</h2></span>
+            <div class="imageContainer"><img src="{{ mostRecent.data.image | safe }}" /> </div>
+        </div>
+        <div class="postContent">
+            <h3>{{ mostRecent.data.title | safe }}</h3>
+            <h4>{{ mostRecent.data.author | safe }}</h4>
+            {# <h4>{{ mostRecent.date | date("MMMM d, yyyy") }}</h4> #}
+            {{ mostRecent.templateContent | safe}}
+        </div>
     </div>
 </div>

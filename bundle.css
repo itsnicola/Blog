@@ -67,6 +67,10 @@ body {
         width: 100%;
         min-height: 100vh;
 
+        .postContainer {
+            display: flex;
+            justify-content: center;
+        }
         .post { 
             left: auto;
             margin-left: auto;
@@ -75,7 +79,7 @@ body {
             min-height: 80vmin;
             border: 1px solid #000000;
             margin: 50px;
-            /* padding: 10px; */
+            max-width: 1182px;
 
             .postLabelContainer {
                 position: relative;
