@@ -1,5 +1,12 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Antic+Didone&family=Cutive&family=Miriam+Libre:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Antic+Didone&family=Miriam+Libre:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@font-face {
+    font-family: Thabit;
+    src: url('assets/fonts/thabit/Thabit.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 body {
     font-family: Arial, sans-serif;
@@ -19,7 +26,7 @@ body {
             margin: 0;
         }
         h2 {
-            font-family: "Cutive", serif;
+            font-family: 'Thabit', monospace;
             font-size: 20px;
             font-weight: 600;
             margin: 5px;
@@ -27,9 +34,8 @@ body {
         }
     }
     .navBar {
-        font-family: "Cutive", serif;
-        font-size: 14px;
-        font-weight: 200;
+        font-family: 'Thabit', monospace;
+        font-size: 16px;
         background-color: #ffffff;
         border: 1px solid #000000;
         display: flex;
@@ -114,8 +120,8 @@ body {
                 }
 
                 h4 {
-                    font-family: "Cutive", serif;
-                    font-size: 12px;
+                    font-family: 'Thabit', monospace;
+                    font-size: 14px;
                     color: #837d78;
                     margin-top: 5px;
                     margin-left: 7px;
@@ -123,7 +129,7 @@ body {
 
                 font-family: "Roboto", serif;
                 font-weight: 300;
-                
+
             }
         }
     }
