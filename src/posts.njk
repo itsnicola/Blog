@@ -1,0 +1,19 @@
+---
+layout: layout.html
+---
+
+{%- for post in collections.posts | reverse %}
+    <div class="postContainer">
+        <div class="post">
+            <div class="postLabelContainer">
+                <div class="imageContainer"><img src="{{ post.data.image | safe }}" /> </div>
+            </div>
+            <div class="postContent">
+                <h3>{{ post.data.title | safe }}</h3>
+                <h4>{{ post.data.author | safe }}</h4>
+                {# <h4>{{ post.date | date("MMMM d, yyyy") }}</h4> #}
+                {{ post.templateContent | safe}}
+            </div>
+        </div>
+    </div>
+{%- endfor %}
