@@ -144,6 +144,9 @@ body {
 
             .postContent {
                 padding: 0 20px;
+                .postBody {
+                    padding: 0 20px;
+                }
 
                 h2 {
                     font-family: "Miriam Libre", sans-serif;

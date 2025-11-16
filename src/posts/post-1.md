@@ -1,4 +1,4 @@
 ---
-title: Post Title
+title: "Istanbul: how to stay on a budget"
+author: Kassie
 ---
-yeahyeahyeahyeah

@@ -12,7 +12,9 @@ layout: layout.html
                 <h3>{{ post.data.title | safe }}</h3>
                 <h4>{{ post.data.author | safe }}</h4>
                 {# <h4>{{ post.date | date("MMMM d, yyyy") }}</h4> #}
-                {{ post.templateContent | safe}}
+                <div class="postBody">
+                    {{ post.templateContent | safe}}
+                </div>
             </div>
         </div>
     </div>
