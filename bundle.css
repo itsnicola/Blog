@@ -145,6 +145,13 @@ body {
             .postContent {
                 padding: 0 20px;
 
+                h2 {
+                    font-family: "Miriam Libre", sans-serif;
+                    font-size: 28px;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                }
+
                 h3 {
                     font-family: "Miriam Libre", sans-serif;
                     font-size: 24px;
@@ -163,6 +170,10 @@ body {
                 font-family: "Roboto", serif;
                 font-weight: 300;
 
+                .postBlock {
+                    display: block;
+                    margin-bottom: 1em;
+                }
             }
         }
     }
