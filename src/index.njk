@@ -1,20 +1,67 @@
 ---
 layout: layout.html
+title: Mrs & Mrs Maps
+subtitle: Honest travel notes for queer couples who care about design, safety, and budget
+eyebrow: Featured frontend sample
+intro: A magazine-style landing page highlighting recent writing, practical trip filters, and a stronger visual identity.
+pageClass: home-page
 ---
 
 {% set mostRecent = collections.posts[collections.posts.length - 1] %}
 
-<div class="postContainer">
-    <div class="post">
-        <div class="postLabelContainer">
-            <span class="postLabel"><h2>Latest Post</h2></span>
-            <div class="imageContainer"><img src="{{ mostRecent.data.image | safe }}" /> </div>
+<section class="landingGrid">
+    <article class="featureCard">
+        <div class="featureCard__media">
+            <span class="sectionTag">Latest post</span>
+            <img src="{{ mostRecent.data.image | safe }}" alt="{{ mostRecent.data.title | safe }}">
         </div>
-        <div class="postContent">
-            <h3>{{ mostRecent.data.title | safe }}</h3>
-            <h4>{{ mostRecent.data.author | safe }}</h4>
-            {# <h4>{{ mostRecent.date | date("MMMM d, yyyy") }}</h4> #}
-            {{ mostRecent.templateContent | safe}}
+        <div class="featureCard__content">
+            <p class="featureCard__kicker">Field notes from the road</p>
+            <h2>{{ mostRecent.data.title | safe }}</h2>
+            <p class="featureCard__meta">By {{ mostRecent.data.author | safe }}</p>
+            <div class="featureCard__body">
+                {{ mostRecent.templateContent | safe }}
+            </div>
+            <a class="buttonLink" href="/posts/">Browse all posts</a>
         </div>
+    </article>
+
+    <aside class="infoStack">
+        <div class="infoCard">
+            <span class="sectionTag">What we track</span>
+            <div class="statGrid">
+                <div>
+                    <strong>Budget</strong>
+                    <span>Low-cost stays, cheap eats, transit wins</span>
+                </div>
+                <div>
+                    <strong>Food</strong>
+                    <span>Street food first, tourist traps last</span>
+                </div>
+                <div>
+                    <strong>Safety</strong>
+                    <span>Queer-friendly impressions from real trips</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="infoCard accentCard">
+            <span class="sectionTag">Why this site works</span>
+            <p>Designed like a small editorial product: bold typography, layered cards, strong image framing, and responsive sections that still feel intentional on mobile.</p>
+        </div>
+    </aside>
+</section>
+
+<section class="homeStrip">
+    <div class="homeStrip__copy">
+        <span class="sectionTag">Travel lens</span>
+        <h2>Fast, opinionated, and easy to scan.</h2>
+        <p>The site is structured so readers can move from inspiration to practical details quickly, without losing personality.</p>
     </div>
-</div>
+    <div class="pillRow">
+        <span>Editorial layout</span>
+        <span>Responsive navigation</span>
+        <span>Custom typography</span>
+        <span>Image-led storytelling</span>
+    </div>
+</section>

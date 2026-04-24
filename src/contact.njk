@@ -1,3 +1,53 @@
 ---
 layout: layout.html
+title: Contact
+subtitle: Reach out for collabs, recommendations, or a quick hello from the road
+eyebrow: Form and contact UI
+intro: A styled contact section that adds another concrete frontend example to the app without needing backend infrastructure.
+pageClass: contact-page
 ---
+<section class="contactLayout">
+    <div class="contactPanel">
+        <span class="sectionTag">Get in touch</span>
+        <h2>For brand partnerships, queer travel questions, or itinerary swaps.</h2>
+        <p>We are most interested in practical travel collaborations, community recommendations, and projects that align with affordable, inclusive travel.</p>
+        <div class="contactList">
+            <div>
+                <strong>Email</strong>
+                <span>hello@mrsandmrsmaps.com</span>
+            </div>
+            <div>
+                <strong>Base</strong>
+                <span>Madrid, Spain</span>
+            </div>
+            <div>
+                <strong>Best for</strong>
+                <span>Editorial features, travel notes, and queer-friendly destination research</span>
+            </div>
+        </div>
+    </div>
+
+    <form class="contactForm">
+        <label>
+            Name
+            <input type="text" name="name" placeholder="Your name">
+        </label>
+        <label>
+            Email
+            <input type="email" name="email" placeholder="name@example.com">
+        </label>
+        <label>
+            Topic
+            <select name="topic">
+                <option>Collaboration</option>
+                <option>Travel question</option>
+                <option>General hello</option>
+            </select>
+        </label>
+        <label>
+            Message
+            <textarea name="message" rows="6" placeholder="Tell us where you're headed or what you're working on."></textarea>
+        </label>
+        <button type="button">Send message</button>
+    </form>
+</section>

@@ -1,21 +1,26 @@
 ---
 layout: layout.html
+title: Posts
+subtitle: Trip notes, budget breakdowns, and destination impressions
+eyebrow: Content archive
+intro: A card-based index for travel writing, designed to feel more like a curated publication than a plain blog list.
+pageClass: posts-page
 ---
 
-{%- for post in collections.posts | reverse %}
-    <div class="postContainer">
-        <div class="post">
-            <div class="postLabelContainer">
-                <div class="imageContainer"><img src="{{ post.data.image | safe }}" /> </div>
+<section class="archiveGrid">
+    {%- for post in collections.posts | reverse %}
+        <article class="archiveCard">
+            <div class="archiveCard__media">
+                <img src="{{ post.data.image | safe }}" alt="{{ post.data.title | safe }}">
             </div>
-            <div class="postContent">
-                <h3>{{ post.data.title | safe }}</h3>
-                <h4>{{ post.data.author | safe }}</h4>
-                {# <h4>{{ post.date | date("MMMM d, yyyy") }}</h4> #}
-                <div class="postBody">
-                    {{ post.templateContent | safe}}
+            <div class="archiveCard__content">
+                <span class="sectionTag">Destination journal</span>
+                <h2>{{ post.data.title | safe }}</h2>
+                <p class="archiveCard__meta">By {{ post.data.author | safe }}</p>
+                <div class="archiveCard__body">
+                    {{ post.templateContent | safe }}
                 </div>
             </div>
-        </div>
-    </div>
-{%- endfor %}
+        </article>
+    {%- endfor %}
+</section>
