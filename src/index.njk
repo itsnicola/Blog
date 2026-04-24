@@ -1,16 +1,31 @@
 ---
 layout: layout.html
 title: Mrs & Mrs Maps
-subtitle: Honest travel notes for queer couples who care about design, safety, and budget
-eyebrow: Featured frontend sample
-intro: A magazine-style landing page highlighting recent writing, practical trip filters, and a stronger visual identity.
+subtitle: Hi! We're a couple of lezzas who like to travel without breaking the bank.
+eyebrow: Who are we?
+intro: We're not actually married and we hardly know how to use a map, but we do have a lot of experience traveling together and sharing our tips with friends. This site is our way of sharing those tips, and hopefully inspiring more queer folks to get out there and explore the world.
 pageClass: home-page
+heroImage: /assets/photos/about-us.jpg
+heroImageAlt: Kassie and Nicola walking together while travelling
+heroStyle: image-only
 ---
 
 {% set mostRecent = collections.posts[collections.posts.length - 1] %}
 
-<section class="landingGrid">
-    <article class="featureCard">
+<section class="homeLead">
+    <div class="homeLead__copy">
+        <span class="sectionTag">Latest from the road</span>
+        <h2>Travel notes for queer couples who want a trip to feel good, not just look good.</h2>
+        <p>We write about budget, food, and safety with enough personality to feel like a real recommendation, not a checklist.</p>
+    </div>
+    <div class="pillRow">
+        <span>Budget-first</span>
+        <span>Food-led</span>
+        <span>Queer-friendly</span>
+    </div>
+</section>
+
+<article class="featureCard featureCard--spotlight">
         <div class="featureCard__media">
             <span class="sectionTag">Latest post</span>
             <img src="{{ mostRecent.data.image | safe }}" alt="{{ mostRecent.data.title | safe }}">
@@ -24,38 +39,26 @@ pageClass: home-page
             </div>
             <a class="buttonLink" href="/posts/">Browse all posts</a>
         </div>
-    </article>
-
-    <aside class="infoRail">
-        <span class="sectionTag">What we track</span>
-        <div class="statGrid">
-            <div>
-                <strong>Budget</strong>
-                <span>Low-cost stays, cheap eats, transit wins</span>
-            </div>
-            <div>
-                <strong>Food</strong>
-                <span>Street food first, tourist traps last</span>
-            </div>
-            <div>
-                <strong>Safety</strong>
-                <span>Queer-friendly impressions from real trips</span>
-            </div>
-        </div>
-        <p class="railNote">Designed to read quickly: strong hierarchy, restrained framing, and responsive sections that still feel intentional on mobile.</p>
-    </aside>
-</section>
+</article>
 
 <section class="homeStrip">
     <div class="homeStrip__copy">
-        <span class="sectionTag">Travel lens</span>
+        <span class="sectionTag">What we track</span>
         <h2>Fast, opinionated, and easy to scan.</h2>
-        <p>The site is structured so readers can move from inspiration to practical details quickly, without losing personality.</p>
+        <p>The site is built around low-cost stays, excellent cheap food, and how places actually feel to move through as a queer couple.</p>
     </div>
-    <div class="pillRow">
-        <span>Editorial layout</span>
-        <span>Responsive navigation</span>
-        <span>Custom typography</span>
-        <span>Image-led storytelling</span>
+    <div class="statGrid statGrid--inline">
+        <div>
+            <strong>Budget</strong>
+            <span>Low-cost stays, cheap eats, transit wins</span>
+        </div>
+        <div>
+            <strong>Food</strong>
+            <span>Street food first, tourist traps last</span>
+        </div>
+        <div>
+            <strong>Safety</strong>
+            <span>Queer-friendly impressions from real trips</span>
+        </div>
     </div>
 </section>

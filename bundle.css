@@ -111,15 +111,16 @@ textarea {
 
 .brandMark__label {
     font-family: "Miriam Libre", sans-serif;
-    font-size: 1rem;
+    font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: 0.02em;
+    line-height: 1;
 }
 
 .brandMark__meta {
     color: var(--muted);
     font-family: Thabit, monospace;
-    font-size: 0.85rem;
+    font-size: 0.92rem;
 }
 
 .navBar {
@@ -172,20 +173,51 @@ textarea {
 }
 
 .heroPanel {
+    --hero-text: #fff7f1;
+    --hero-subtext: rgba(255, 242, 232, 0.88);
+    --hero-chip-bg: rgba(255, 250, 244, 0.82);
+    --hero-chip-text: var(--muted);
+    --hero-badge-bg: rgba(46, 28, 20, 0.24);
+    --hero-badge-border: rgba(255, 242, 232, 0.22);
+    --hero-badge-text: rgba(255, 242, 232, 0.76);
+    --hero-copy-bg: transparent;
+    --hero-copy-padding: 0;
+    --hero-copy-radius: 0;
     position: relative;
     overflow: hidden;
-    display: grid;
-    grid-template-columns: minmax(0, 1.5fr) auto;
-    gap: 2rem;
-    align-items: end;
     margin-top: 1rem;
-    padding: clamp(2rem, 4vw, 4rem);
-    border: 1px solid var(--line);
+    min-height: clamp(24rem, 64vw, 40rem);
     border-radius: var(--radius-lg);
     background:
-        linear-gradient(135deg, rgba(255, 249, 242, 0.95), rgba(245, 228, 214, 0.92)),
-        linear-gradient(180deg, rgba(207, 116, 92, 0.12), transparent);
+        linear-gradient(135deg, rgba(110, 76, 64, 0.92), rgba(207, 116, 92, 0.7)),
+        linear-gradient(180deg, rgba(245, 228, 214, 0.3), transparent);
     box-shadow: var(--shadow);
+}
+
+.heroPanel--image-only {
+    min-height: clamp(30rem, 74vw, 50rem);
+}
+
+.heroPanel__media,
+.heroPanel__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.heroPanel__media img {
+    object-fit: cover;
+}
+
+.heroPanel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(45, 28, 20, 0.12) 0%, rgba(45, 28, 20, 0.24) 30%, rgba(35, 20, 14, 0.56) 100%),
+        linear-gradient(135deg, rgba(207, 116, 92, 0.16), transparent 55%);
+    z-index: 0;
 }
 
 .heroPanel::after {
@@ -196,6 +228,24 @@ textarea {
     height: 18rem;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(207, 116, 92, 0.18), transparent 65%);
+    z-index: 0;
+}
+
+.heroPanel--image-only::before {
+    background:
+        linear-gradient(180deg, rgba(45, 28, 20, 0.04) 0%, rgba(45, 28, 20, 0.1) 38%, rgba(35, 20, 14, 0.22) 100%),
+        linear-gradient(135deg, rgba(207, 116, 92, 0.06), transparent 55%);
+}
+
+.heroPanel__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) auto;
+    gap: 2rem;
+    align-items: end;
+    min-height: inherit;
+    padding: clamp(2rem, 4vw, 4rem);
 }
 
 .heroEyebrow,
@@ -206,12 +256,20 @@ textarea {
     padding: 0.45rem 0.75rem;
     border: 1px solid rgba(27, 23, 21, 0.12);
     border-radius: 999px;
-    background: rgba(255, 250, 244, 0.82);
-    color: var(--muted);
+    background: var(--hero-chip-bg);
+    color: var(--hero-chip-text);
     font-family: Thabit, monospace;
     font-size: 0.82rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+}
+
+.heroCopy {
+    width: fit-content;
+    max-width: min(100%, 42rem);
+    padding: var(--hero-copy-padding);
+    border-radius: var(--hero-copy-radius);
+    background: var(--hero-copy-bg);
 }
 
 .heroCopy h1 {
@@ -221,11 +279,12 @@ textarea {
     font-weight: 400;
     line-height: 0.95;
     max-width: 10ch;
+    color: var(--hero-text);
 }
 
 .heroSubtitle {
     margin: 0;
-    color: var(--ink);
+    color: var(--hero-text);
     font-family: "Miriam Libre", sans-serif;
     font-size: clamp(1.05rem, 2.1vw, 1.4rem);
     font-weight: 500;
@@ -235,7 +294,7 @@ textarea {
 .heroIntro {
     max-width: 40rem;
     margin: 1.1rem 0 0;
-    color: var(--muted);
+    color: var(--hero-subtext);
     font-size: 1.02rem;
     line-height: 1.7;
 }
@@ -247,24 +306,82 @@ textarea {
     flex-direction: column;
     gap: 0.35rem;
     align-self: start;
-    padding: 1rem 0 0;
-    border-top: 1px solid rgba(27, 23, 21, 0.12);
-    background: transparent;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--hero-badge-border);
+    border-radius: var(--radius-md);
+    background: var(--hero-badge-bg);
+    backdrop-filter: blur(6px);
     min-width: 14rem;
 }
 
 .heroBadge span {
-    color: var(--muted);
+    color: var(--hero-badge-text);
     font-size: 0.92rem;
 }
 
 .heroBadge strong {
     font-family: "Miriam Libre", sans-serif;
     font-size: 1.15rem;
+    color: var(--hero-text);
+}
+
+.heroPanel--text-dark {
+    --hero-text: #1b1715;
+    --hero-subtext: rgba(27, 23, 21, 0.82);
+    --hero-chip-bg: rgba(255, 250, 244, 0.84);
+    --hero-chip-text: #5b4c45;
+    --hero-badge-bg: rgba(255, 248, 241, 0.72);
+    --hero-badge-border: rgba(27, 23, 21, 0.14);
+    --hero-badge-text: rgba(27, 23, 21, 0.72);
+}
+
+.heroPanel--text-light {
+    --hero-text: #fff7f1;
+    --hero-subtext: rgba(255, 242, 232, 0.88);
+    --hero-chip-bg: rgba(255, 250, 244, 0.82);
+    --hero-chip-text: var(--muted);
+    --hero-badge-bg: rgba(46, 28, 20, 0.24);
+    --hero-badge-border: rgba(255, 242, 232, 0.22);
+    --hero-badge-text: rgba(255, 242, 232, 0.76);
+}
+
+.heroPanel--text-invert {
+    --hero-text: #fffaf4;
+    --hero-subtext: rgba(255, 244, 236, 0.86);
+    --hero-chip-bg: rgba(18, 15, 13, 0.88);
+    --hero-chip-text: #fff4ea;
+    --hero-badge-bg: rgba(18, 15, 13, 0.72);
+    --hero-badge-border: rgba(255, 244, 236, 0.18);
+    --hero-badge-text: rgba(255, 244, 236, 0.7);
+    --hero-copy-bg: rgba(18, 15, 13, 0.78);
+    --hero-copy-padding: 1rem 1.1rem;
+    --hero-copy-radius: var(--radius-md);
 }
 
 .pageContent {
     padding: 2rem 0 4rem;
+}
+
+.homeLead {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) auto;
+    gap: 1.5rem;
+    align-items: end;
+    margin-bottom: 1.5rem;
+}
+
+.homeLead__copy h2 {
+    margin: 0.85rem 0 0.75rem;
+    font-family: "Miriam Libre", sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.02;
+}
+
+.homeLead__copy p {
+    max-width: 42rem;
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.75;
 }
 
 .landingGrid,
@@ -286,6 +403,12 @@ textarea {
     border-radius: var(--radius-lg);
     background: var(--paper);
     box-shadow: var(--shadow);
+}
+
+.featureCard--spotlight {
+    margin-bottom: 1.5rem;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+    padding: 1.1rem;
 }
 
 .featureCard:hover,
@@ -320,6 +443,21 @@ textarea {
 .featureCard:focus-within .featureCard__media img {
     transform: scale(1.035);
     filter: saturate(1.04);
+}
+
+.featureCard--spotlight .featureCard__media {
+    min-height: 34rem;
+}
+
+.featureCard--spotlight .featureCard__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 0.5rem 1rem 0;
+}
+
+.featureCard--spotlight .featureCard__content h2 {
+    font-size: clamp(2.1rem, 4vw, 3.3rem);
 }
 
 .featureCard__content,
@@ -402,6 +540,11 @@ textarea {
     margin-top: 1rem;
 }
 
+.statGrid--inline {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 0;
+}
+
 .statGrid div,
 .contactList div {
     display: grid;
@@ -430,7 +573,7 @@ textarea {
 
 .homeStrip {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
     gap: 2rem;
     align-items: center;
     margin-top: 1.5rem;
@@ -594,7 +737,7 @@ textarea {
 .contactForm textarea {
     resize: vertical;
 }
-
+.buttonPrimary,
 .contactForm button {
     justify-self: start;
     padding: 0.85rem 1.2rem;
@@ -610,6 +753,8 @@ textarea {
     transition: background-color 180ms ease, transform 180ms ease;
 }
 
+.buttonPrimary:hover,
+.buttonPrimary:focus-visible,
 .contactForm button:hover,
 .contactForm button:focus-visible {
     box-shadow: 0 12px 22px rgba(207, 116, 92, 0.16);
@@ -656,6 +801,7 @@ textarea {
 }
 
 @media (max-width: 960px) {
+    .homeLead,
     .landingGrid,
     .splitFeature,
     .contactLayout,
@@ -674,6 +820,10 @@ textarea {
     }
 
     .heroPanel {
+        grid-template-columns: 1fr;
+    }
+
+    .statGrid--inline {
         grid-template-columns: 1fr;
     }
 }
@@ -701,8 +851,23 @@ textarea {
         padding: 1.2rem;
     }
 
+    .heroPanel__inner {
+        grid-template-columns: 1fr;
+        align-items: end;
+        min-height: inherit;
+        padding: 1.5rem 1.2rem;
+    }
+
     .featureCard {
         grid-template-columns: 1fr;
+    }
+
+    .featureCard--spotlight .featureCard__media {
+        min-height: 22rem;
+    }
+
+    .featureCard--spotlight .featureCard__content {
+        padding: 0.5rem 0 0;
     }
 
     .heroCopy h1 {

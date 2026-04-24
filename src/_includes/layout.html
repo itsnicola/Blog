@@ -16,7 +16,7 @@
                 <div class="topBar">
                     <a class="brandMark" href="/">
                         <span class="brandMark__label">Mrs & Mrs Maps</span>
-                        <span class="brandMark__meta">Budget travel notes for queer explorers</span>
+                        <span class="brandMark__meta">A sapphic budget travel guide.</span>
                     </a>
 
                     <button
@@ -38,20 +38,30 @@
                     </nav>
                 </div>
 
-                <div class="heroPanel">
-                    <div class="heroCopy">
-                        <span class="heroEyebrow">{{ eyebrow | default: "Editorial travel journal" }}</span>
-                        <h1>{{ title | default: "Mrs & Mrs Maps" }}</h1>
-                        <p class="heroSubtitle">{{ subtitle | default: "A sapphic budget travel guide" }}</p>
-                        {% if intro %}
-                            <p class="heroIntro">{{ intro }}</p>
-                        {% endif %}
-                    </div>
+                <div class="heroPanel{% if heroStyle %} heroPanel--{{ heroStyle }}{% endif %}">
+                    {% if heroImage %}
+                        <div class="heroPanel__media">
+                            <img src="{{ heroImage }}" alt="{{ heroImageAlt | default: title | default: 'Mrs & Mrs Maps' }}">
+                        </div>
+                    {% endif %}
 
-                    <div class="heroBadge">
-                        <span>Built around</span>
-                        <strong>food, budget, safety</strong>
-                    </div>
+                    {% unless heroStyle == "image-only" %}
+                        <div class="heroPanel__inner">
+                            <div class="heroCopy">
+                                <span class="heroEyebrow">{{ eyebrow | default: "Editorial travel journal" }}</span>
+                                <h1>{{ title | default: "Mrs & Mrs Maps" }}</h1>
+                                <p class="heroSubtitle">{{ subtitle | default: "A sapphic budget travel guide" }}</p>
+                                {% if intro %}
+                                    <p class="heroIntro">{{ intro }}</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="heroBadge">
+                                <span>Built around</span>
+                                <strong>food, budget, safety</strong>
+                            </div>
+                        </div>
+                    {% endunless %}
                 </div>
             </header>
 
@@ -87,6 +97,101 @@
                     toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
                 }
             }
+
+            function applyHeroTone() {
+                const hero = document.querySelector(".heroPanel");
+                const image = hero?.querySelector(".heroPanel__media img");
+                const copy = hero?.querySelector(".heroCopy");
+
+                if (!hero || !image || !copy || !image.complete || !image.naturalWidth || !image.naturalHeight) {
+                    return;
+                }
+
+                hero.classList.remove("heroPanel--text-dark", "heroPanel--text-light", "heroPanel--text-invert");
+
+                const heroRect = hero.getBoundingClientRect();
+                const copyRect = copy.getBoundingClientRect();
+                const relativeX = Math.max(0, copyRect.left - heroRect.left);
+                const relativeY = Math.max(0, copyRect.top - heroRect.top);
+                const relativeWidth = Math.min(heroRect.width - relativeX, copyRect.width);
+                const relativeHeight = Math.min(heroRect.height - relativeY, copyRect.height);
+
+                const imageRatio = image.naturalWidth / image.naturalHeight;
+                const heroRatio = heroRect.width / heroRect.height;
+                let drawWidth;
+                let drawHeight;
+                let offsetX;
+                let offsetY;
+
+                if (imageRatio > heroRatio) {
+                    drawHeight = heroRect.height;
+                    drawWidth = drawHeight * imageRatio;
+                    offsetX = (heroRect.width - drawWidth) / 2;
+                    offsetY = 0;
+                } else {
+                    drawWidth = heroRect.width;
+                    drawHeight = drawWidth / imageRatio;
+                    offsetX = 0;
+                    offsetY = (heroRect.height - drawHeight) / 2;
+                }
+
+                const sourceX = ((relativeX - offsetX) / drawWidth) * image.naturalWidth;
+                const sourceY = ((relativeY - offsetY) / drawHeight) * image.naturalHeight;
+                const sourceWidth = (relativeWidth / drawWidth) * image.naturalWidth;
+                const sourceHeight = (relativeHeight / drawHeight) * image.naturalHeight;
+
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d", { willReadFrequently: true });
+                if (!context) {
+                    return;
+                }
+
+                canvas.width = 80;
+                canvas.height = 80;
+                context.drawImage(
+                    image,
+                    Math.max(0, sourceX),
+                    Math.max(0, sourceY),
+                    Math.max(1, sourceWidth),
+                    Math.max(1, sourceHeight),
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+                const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+                let luminanceTotal = 0;
+                let sampleCount = 0;
+
+                for (let i = 0; i < pixels.length; i += 4) {
+                    const r = pixels[i];
+                    const g = pixels[i + 1];
+                    const b = pixels[i + 2];
+                    luminanceTotal += 0.2126 * r + 0.7152 * g + 0.0722 * b;
+                    sampleCount += 1;
+                }
+
+                const averageLuminance = luminanceTotal / sampleCount;
+
+                if (averageLuminance > 165) {
+                    hero.classList.add("heroPanel--text-dark");
+                } else if (averageLuminance > 115) {
+                    hero.classList.add("heroPanel--text-invert");
+                } else {
+                    hero.classList.add("heroPanel--text-light");
+                }
+            }
+
+            window.addEventListener("load", () => {
+                applyHeroTone();
+                const heroImage = document.querySelector(".heroPanel__media img");
+                if (heroImage) {
+                    heroImage.addEventListener("load", applyHeroTone);
+                }
+            });
+
+            window.addEventListener("resize", applyHeroTone);
         </script>
     </body>
 </html>
