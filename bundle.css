@@ -194,19 +194,15 @@ textarea {
     box-shadow: var(--shadow);
 }
 
-.heroPanel--image-only {
-    min-height: clamp(30rem, 74vw, 50rem);
-}
-
-.heroPanel__media,
-.heroPanel__media img {
+.heroPanelImg,
+.heroPanelImg img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
 }
 
-.heroPanel__media img {
+.heroPanelImg img {
     object-fit: cover;
 }
 
@@ -229,23 +225,6 @@ textarea {
     border-radius: 50%;
     background: radial-gradient(circle, rgba(207, 116, 92, 0.18), transparent 65%);
     z-index: 0;
-}
-
-.heroPanel--image-only::before {
-    background:
-        linear-gradient(180deg, rgba(45, 28, 20, 0.04) 0%, rgba(45, 28, 20, 0.1) 38%, rgba(35, 20, 14, 0.22) 100%),
-        linear-gradient(135deg, rgba(207, 116, 92, 0.06), transparent 55%);
-}
-
-.heroPanel__inner {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1.4fr) auto;
-    gap: 2rem;
-    align-items: end;
-    min-height: inherit;
-    padding: clamp(2rem, 4vw, 4rem);
 }
 
 .heroEyebrow,

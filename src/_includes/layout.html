@@ -6,7 +6,7 @@
         <title>{{ title | default: "Mrs & Mrs Maps" }}</title>
         <meta
             name="description"
-            content="{{ intro | default: 'A sapphic budget travel guide with honest notes on food, safety, and design-forward storytelling.' }}"
+            content="{{ intro }}"
         >
         <link rel="stylesheet" href="/bundle.css">
     </head>
@@ -38,30 +38,13 @@
                     </nav>
                 </div>
 
-                <div class="heroPanel{% if heroStyle %} heroPanel--{{ heroStyle }}{% endif %}">
+                <div class="heroPanel">
                     {% if heroImage %}
-                        <div class="heroPanel__media">
+                        <div class="heroPanelImg">
                             <img src="{{ heroImage }}" alt="{{ heroImageAlt | default: title | default: 'Mrs & Mrs Maps' }}">
                         </div>
                     {% endif %}
 
-                    {% unless heroStyle == "image-only" %}
-                        <div class="heroPanel__inner">
-                            <div class="heroCopy">
-                                <span class="heroEyebrow">{{ eyebrow | default: "Editorial travel journal" }}</span>
-                                <h1>{{ title | default: "Mrs & Mrs Maps" }}</h1>
-                                <p class="heroSubtitle">{{ subtitle | default: "A sapphic budget travel guide" }}</p>
-                                {% if intro %}
-                                    <p class="heroIntro">{{ intro }}</p>
-                                {% endif %}
-                            </div>
-
-                            <div class="heroBadge">
-                                <span>Built around</span>
-                                <strong>food, budget, safety</strong>
-                            </div>
-                        </div>
-                    {% endunless %}
                 </div>
             </header>
 
