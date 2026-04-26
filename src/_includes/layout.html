@@ -1,37 +1,258 @@
 <!doctype html>
-<link rel="stylesheet" href="/bundle.css">
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>{{ title | default: "Mrs & Mrs Maps" }}</title>
-	</head>
-	<body>
-		<header>
-            <div class="show-on-small navIconContainer" onclick="document.querySelector('.navBar').classList.toggle('open')">
-                <img src="/assets/icons/align-justify.svg"></img>
-            </div>
-			<h1>{{ title | default: "Mrs & Mrs Maps" }}</h1>
-            <h2>{{ subtitle | default: "A sapphic budget travel guide"}}</h2>
-		</header>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ title | default: "Mrs & Mrs Maps" }}</title>
+        <meta
+            name="description"
+            content="{{ intro }}"
+        >
+        <link rel="stylesheet" href="/bundle.css">
+    </head>
+    <body class="{{ pageClass | default: 'default-page' }}">
+        <div class="siteShell">
+            <header class="siteHeader">
+                <div class="topBar">
+                    <a class="brandMark" href="/">
+                        <span class="brandMark__label">Mrs & Mrs Maps</span>
+                        <span class="brandMark__meta">A sapphic budget travel guide.</span>
+                    </a>
 
-        <div class="navBar">
-            <div class="show-on-small navIconContainer" onclick="document.querySelector('.navBar').classList.toggle('open')">
-                <img src="/assets/icons/x.svg"></img>
+                    <button
+                        class="navToggle show-on-small"
+                        type="button"
+                        aria-expanded="false"
+                        aria-controls="site-nav"
+                        aria-label="Toggle navigation"
+                        onclick="toggleNav()"
+                    >
+                        <img src="/assets/icons/align-justify.svg" alt="">
+                    </button>
+
+                    <nav class="navBar hide-on-small" aria-label="Primary">
+                        <a href="/">Home</a>
+                        <a href="/about/">About</a>
+                        <a href="/posts/">Posts</a>
+                    </nav>
+                </div>
+
+                {% if heroSlides or heroImage %}
+                    <div class="heroPanel">
+                        {% if heroSlides %}
+                            <div class="heroCarousel" data-hero-carousel data-autoplay-delay="5000">
+                                {% for slide in heroSlides %}
+                                    <div class="heroPanelImg{% if loop.first %} is-active{% endif %}" data-hero-slide{% if not loop.first %} aria-hidden="true"{% endif %}>
+                                        <img src="{{ slide.src }}" alt="{{ slide.alt | default: title | default: 'Mrs & Mrs Maps' }}">
+                                    </div>
+                                {% endfor %}
+
+                                {% if heroSlides.length > 1 %}
+                                    <button class="heroCarousel__control heroCarousel__control--prev" type="button" aria-label="Previous photo" data-hero-prev>
+                                        <span aria-hidden="true"><img src="/assets/icons/left.png" alt=""></span>
+                                    </button>
+                                    <button class="heroCarousel__control heroCarousel__control--next" type="button" aria-label="Next photo" data-hero-next>
+                                        <span aria-hidden="true"><img src="/assets/icons/right.png" alt=""></span>
+                                    </button>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="heroPanelImg is-active" data-hero-slide>
+                                <img src="{{ heroImage }}" alt="{{ heroImageAlt | default: title | default: 'Mrs & Mrs Maps' }}">
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </header>
+
+            <div class="mobileNav" id="site-nav" aria-label="Mobile navigation">
+                <div class="mobileNav__header">
+                    <span>Explore</span>
+                    <button
+                        class="navToggle"
+                        type="button"
+                        aria-label="Close navigation"
+                        onclick="toggleNav()"
+                    >
+                        <img src="/assets/icons/x.svg" alt="">
+                    </button>
+                </div>
+                <a href="/" onclick="toggleNav()">Home</a>
+                <a href="/about/" onclick="toggleNav()">About</a>
+                <a href="/posts/" onclick="toggleNav()">Posts</a>
             </div>
 
-            <div class="navItem"></div>
-            <div class="navItem"><a href="/">Home</a></div>
-            <div class="navItem"><a href="/about/">About</a></div>
-            <div class="navItem"><a href="/posts/">Posts</a></div>
-            <div class="navItem"><a href="/contact/">Contact</a></div>
-            <div class="navItem"><a href="//"></a></div>
-            <div class="navItem"><a href="//"></a></div>
-            <div class="navItem"></div>
+            <main class="pageContent">
+                {{ content }}
+            </main>
         </div>
 
-		<main>
-			{{ content }}
-		</main>
-	</body>
+        <script>
+            function toggleNav() {
+                const nav = document.getElementById("site-nav");
+                const toggle = document.querySelector(".navToggle");
+                const isOpen = nav.classList.toggle("open");
+                if (toggle) {
+                    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+                }
+            }
+
+            function getActiveHeroImage(hero) {
+                return hero?.querySelector(".heroPanelImg.is-active img") || hero?.querySelector(".heroPanelImg img");
+            }
+
+            function applyHeroTone() {
+                const hero = document.querySelector(".heroPanel");
+                const image = getActiveHeroImage(hero);
+                const copy = hero?.querySelector(".heroCopy");
+
+                if (!hero || !image || !copy || !image.complete || !image.naturalWidth || !image.naturalHeight) {
+                    return;
+                }
+
+                hero.classList.remove("heroPanel--text-dark", "heroPanel--text-light", "heroPanel--text-invert");
+
+                const heroRect = hero.getBoundingClientRect();
+                const copyRect = copy.getBoundingClientRect();
+                const relativeX = Math.max(0, copyRect.left - heroRect.left);
+                const relativeY = Math.max(0, copyRect.top - heroRect.top);
+                const relativeWidth = Math.min(heroRect.width - relativeX, copyRect.width);
+                const relativeHeight = Math.min(heroRect.height - relativeY, copyRect.height);
+
+                const imageRatio = image.naturalWidth / image.naturalHeight;
+                const heroRatio = heroRect.width / heroRect.height;
+                let drawWidth;
+                let drawHeight;
+                let offsetX;
+                let offsetY;
+
+                if (imageRatio > heroRatio) {
+                    drawHeight = heroRect.height;
+                    drawWidth = drawHeight * imageRatio;
+                    offsetX = (heroRect.width - drawWidth) / 2;
+                    offsetY = 0;
+                } else {
+                    drawWidth = heroRect.width;
+                    drawHeight = drawWidth / imageRatio;
+                    offsetX = 0;
+                    offsetY = (heroRect.height - drawHeight) / 2;
+                }
+
+                const sourceX = ((relativeX - offsetX) / drawWidth) * image.naturalWidth;
+                const sourceY = ((relativeY - offsetY) / drawHeight) * image.naturalHeight;
+                const sourceWidth = (relativeWidth / drawWidth) * image.naturalWidth;
+                const sourceHeight = (relativeHeight / drawHeight) * image.naturalHeight;
+
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d", { willReadFrequently: true });
+                if (!context) {
+                    return;
+                }
+
+                canvas.width = 80;
+                canvas.height = 80;
+                context.drawImage(
+                    image,
+                    Math.max(0, sourceX),
+                    Math.max(0, sourceY),
+                    Math.max(1, sourceWidth),
+                    Math.max(1, sourceHeight),
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+                const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+                let luminanceTotal = 0;
+                let sampleCount = 0;
+
+                for (let i = 0; i < pixels.length; i += 4) {
+                    const r = pixels[i];
+                    const g = pixels[i + 1];
+                    const b = pixels[i + 2];
+                    luminanceTotal += 0.2126 * r + 0.7152 * g + 0.0722 * b;
+                    sampleCount += 1;
+                }
+
+                const averageLuminance = luminanceTotal / sampleCount;
+
+                if (averageLuminance > 165) {
+                    hero.classList.add("heroPanel--text-dark");
+                } else if (averageLuminance > 115) {
+                    hero.classList.add("heroPanel--text-invert");
+                } else {
+                    hero.classList.add("heroPanel--text-light");
+                }
+            }
+
+            function setupHeroCarousel() {
+                const carousel = document.querySelector("[data-hero-carousel]");
+                if (!carousel) {
+                    return;
+                }
+
+                const slides = Array.from(carousel.querySelectorAll("[data-hero-slide]"));
+                if (slides.length < 2) {
+                    return;
+                }
+
+                const delay = Number(carousel.dataset.autoplayDelay) || 5000;
+                let activeIndex = slides.findIndex((slide) => slide.classList.contains("is-active"));
+                let intervalId = null;
+
+                if (activeIndex < 0) {
+                    activeIndex = 0;
+                    slides[0].classList.add("is-active");
+                }
+
+                function showSlide(nextIndex) {
+                    activeIndex = (nextIndex + slides.length) % slides.length;
+
+                    slides.forEach((slide, index) => {
+                        const isActive = index === activeIndex;
+                        slide.classList.toggle("is-active", isActive);
+                        slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+                    });
+
+                    applyHeroTone();
+                }
+
+                function restartAutoPlay() {
+                    window.clearInterval(intervalId);
+                    intervalId = window.setInterval(() => {
+                        showSlide(activeIndex + 1);
+                    }, delay);
+                }
+
+                carousel.querySelector("[data-hero-prev]")?.addEventListener("click", () => {
+                    showSlide(activeIndex - 1);
+                    restartAutoPlay();
+                });
+
+                carousel.querySelector("[data-hero-next]")?.addEventListener("click", () => {
+                    showSlide(activeIndex + 1);
+                    restartAutoPlay();
+                });
+
+                carousel.addEventListener("mouseenter", () => window.clearInterval(intervalId));
+                carousel.addEventListener("mouseleave", restartAutoPlay);
+                carousel.addEventListener("focusin", () => window.clearInterval(intervalId));
+                carousel.addEventListener("focusout", restartAutoPlay);
+
+                restartAutoPlay();
+            }
+
+            window.addEventListener("load", () => {
+                setupHeroCarousel();
+                applyHeroTone();
+                const heroImage = getActiveHeroImage(document.querySelector(".heroPanel"));
+                if (heroImage) {
+                    heroImage.addEventListener("load", applyHeroTone);
+                }
+            });
+
+            window.addEventListener("resize", applyHeroTone);
+        </script>
+    </body>
 </html>

@@ -1,20 +1,68 @@
 ---
 layout: layout.html
+title: Mrs & Mrs Maps
+subtitle: Hi! We're a couple of lezzas who like to travel without breaking the bank.
+eyebrow: Who are we?
+intro: We're not actually married and we hardly know how to use a map, but we do have a lot of experience traveling together and sharing our tips with friends. This site is our way of sharing those tips, and hopefully inspiring more queer folks to get out there and explore the world.
+pageClass: home-page
+heroSlides:
+  - src: /assets/photos/greece.jpg
+    alt: Kassie and Nicola walking together while travelling
+  - src: /assets/photos/about-us.jpg
+    alt: Kassie and Nicola travelling together
+  - src: /assets/photos/post-2.jpeg
+    alt: A Madrid travel photo from the blog
+heroStyle: image-only
 ---
 
 {% set mostRecent = collections.posts[collections.posts.length - 1] %}
 
-<div class="postContainer">
-    <div class="post">
-        <div class="postLabelContainer">
-            <span class="postLabel"><h2>Latest Post</h2></span>
-            <div class="imageContainer"><img src="{{ mostRecent.data.image | safe }}" /> </div>
+<section class="homeLead">
+    <div class="homeLead__copy">
+        <h2>We're a couple of kiwis travelling around the world!</h2>
+        <p>As a queer couple, safety is our number 1 - followed by good food and unique experiences.</p>
+    </div>
+    <div class="pillRow">
+        <span>Budget-first</span>
+        <span>Food-led</span>
+        <span>Queer-friendly</span>
+    </div>
+</section>
+
+<article class="featureCard featureCard--spotlight">
+        <div class="featureCard__media">
+            <span class="sectionTag">Latest post</span>
+            <img src="{{ mostRecent.data.image | safe }}" alt="{{ mostRecent.data.title | safe }}">
         </div>
-        <div class="postContent">
-            <h3>{{ mostRecent.data.title | safe }}</h3>
-            <h4>{{ mostRecent.data.author | safe }}</h4>
-            {# <h4>{{ mostRecent.date | date("MMMM d, yyyy") }}</h4> #}
-            {{ mostRecent.templateContent | safe}}
+        <div class="featureCard__content">
+            {# <p class="featureCard__kicker">Field notes from the road</p> #}
+            <h2>{{ mostRecent.data.title | safe }}</h2>
+            <p class="featureCard__meta">By {{ mostRecent.data.author | safe }}</p>
+            <div class="featureCard__body">
+                {{ mostRecent.templateContent | safe | truncate(1000)}}
+            </div>
+            <a class="buttonLink" href="/posts/">Browse all posts</a>
+        </div>
+</article>
+
+<section class="homeStrip">
+    <div class="homeStrip__copy">
+        <span class="sectionTag">What we track</span>
+        <h2>Slow, sustainable travel.</h2>
+        <p>We'd rather spend two weeks sinking into one place than buzz through a dozen tourist traps.</p>
+    </div>
+    <div class="statGrid statGrid--inline">
+        <div>
+            <strong>Budget</strong>
+            <span>Low-cost stays, cheap eats, transit wins</span>
+        </div>
+        <div>
+            <strong>Food</strong>
+            <span>Street food first, tourist traps last</span>
+        </div>
+        <div>
+            <strong>Safety</strong>
+            <span>Queer-friendly impressions from real trips</span>
         </div>
     </div>
-</div>
+</section>
