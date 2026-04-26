@@ -39,7 +39,7 @@ heroStyle: image-only
             <h2>{{ mostRecent.data.title | safe }}</h2>
             <p class="featureCard__meta">By {{ mostRecent.data.author | safe }}</p>
             <div class="featureCard__body">
-                {{ mostRecent.templateContent | safe }}
+                {{ mostRecent.templateContent | safe | truncate(1000)}}
             </div>
             <a class="buttonLink" href="/posts/">Browse all posts</a>
         </div>
