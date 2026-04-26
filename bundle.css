@@ -23,6 +23,7 @@
     --radius-md: 12px;
     --radius-sm: 8px;
     --max-width: 1180px;
+    --hero-chip-bg: rgba(255, 250, 244, 0.82); /* fallback colour */
 }
 
 * {
@@ -55,8 +56,7 @@ img {
 .splitFeature__media img,
 .homeStrip,
 .pillRow span,
-.buttonLink,
-.contactForm button {
+.buttonLink button {
     transition:
         transform 240ms ease,
         box-shadow 240ms ease,
@@ -149,9 +149,7 @@ textarea {
 .mobileNav a:hover,
 .mobileNav a:focus-visible,
 .buttonLink:hover,
-.buttonLink:focus-visible,
-.contactForm button:hover,
-.contactForm button:focus-visible {
+.buttonLink:focus-visible {
     background: var(--accent-soft);
     transform: translateY(-1px);
 }
@@ -241,6 +239,7 @@ textarea {
     font-size: 0.82rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    margin-bottom: 10px;
 }
 
 .heroCopy {
@@ -364,8 +363,7 @@ textarea {
 }
 
 .landingGrid,
-.splitFeature,
-.contactLayout {
+.splitFeature {
     display: grid;
     grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
     gap: 2.25rem;
@@ -440,8 +438,7 @@ textarea {
 }
 
 .featureCard__content,
-.archiveCard__content,
-.contactForm {
+.archiveCard__content {
     padding: 0;
 }
 
@@ -457,7 +454,6 @@ textarea {
 
 .featureCard__content h2,
 .splitFeature__content h2,
-.contactIntro h2,
 .homeStrip__copy h2,
 .archiveCard__content h2 {
     margin: 0;
@@ -475,7 +471,6 @@ textarea {
 .featureCard__body,
 .archiveCard__body,
 .postParagraph,
-.contactPanel p,
 .homeStrip__copy p,
 .valueCard p {
     color: var(--muted);
@@ -507,8 +502,7 @@ textarea {
     box-shadow: 0 10px 18px rgba(207, 116, 92, 0.14);
 }
 
-.infoRail,
-.contactIntro {
+.infoRail {
     align-self: start;
     padding-top: 0.5rem;
 }
@@ -524,22 +518,19 @@ textarea {
     margin-top: 0;
 }
 
-.statGrid div,
-.contactList div {
+.statGrid div {
     display: grid;
     gap: 0.3rem;
     padding: 0.9rem 0 0;
     border-top: 1px solid var(--line);
 }
 
-.statGrid strong,
-.contactList strong {
+.statGrid strong {
     font-family: "Miriam Libre", sans-serif;
     font-size: 1rem;
 }
 
-.statGrid span,
-.contactList span {
+.statGrid span {
     color: var(--muted);
     line-height: 1.5;
 }
@@ -627,20 +618,6 @@ textarea {
     font-size: 1.35rem;
 }
 
-.quotePanel {
-    margin-top: 1.5rem;
-    padding: 1.75rem 1.5rem 0;
-    text-align: center;
-    border-top: 1px solid var(--line);
-}
-
-.quotePanel p {
-    margin: 0;
-    font-family: "Antic Didone", serif;
-    font-size: clamp(1.8rem, 5vw, 3rem);
-    line-height: 1.1;
-}
-
 .archiveGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -673,51 +650,7 @@ textarea {
     filter: saturate(1.04);
 }
 
-.contactIntro p {
-    margin-bottom: 1.5rem;
-    color: var(--muted);
-    line-height: 1.75;
-}
-
-.contactList {
-    display: grid;
-    gap: 0.85rem;
-}
-
-.contactForm {
-    display: grid;
-    gap: 1rem;
-    padding-top: 0.25rem;
-    padding: 1.4rem;
-    border: 1px solid rgba(27, 23, 21, 0.1);
-    border-radius: var(--radius-lg);
-    background: rgba(255, 248, 241, 0.66);
-    box-shadow: var(--shadow-soft);
-}
-
-.contactForm label {
-    display: grid;
-    gap: 0.45rem;
-    font-family: "Miriam Libre", sans-serif;
-    font-size: 0.95rem;
-}
-
-.contactForm input,
-.contactForm select,
-.contactForm textarea {
-    width: 100%;
-    padding: 0.95rem 1rem;
-    border: 1px solid rgba(27, 23, 21, 0.16);
-    border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.92);
-    color: var(--ink);
-}
-
-.contactForm textarea {
-    resize: vertical;
-}
-.buttonPrimary,
-.contactForm button {
+.buttonPrimary {
     justify-self: start;
     padding: 0.85rem 1.2rem;
     border: 1px solid var(--accent);
@@ -733,9 +666,7 @@ textarea {
 }
 
 .buttonPrimary:hover,
-.buttonPrimary:focus-visible,
-.contactForm button:hover,
-.contactForm button:focus-visible {
+.buttonPrimary:focus-visible {
     box-shadow: 0 12px 22px rgba(207, 116, 92, 0.16);
 }
 
@@ -783,7 +714,6 @@ textarea {
     .homeLead,
     .landingGrid,
     .splitFeature,
-    .contactLayout,
     .homeStrip {
         grid-template-columns: 1fr;
     }
@@ -875,8 +805,6 @@ textarea {
     .pillRow span:hover,
     .buttonLink:hover,
     .buttonLink:focus-visible,
-    .contactForm button:hover,
-    .contactForm button:focus-visible,
     .splitFeature__media:hover img,
     .featureCard:hover .featureCard__media img,
     .featureCard:focus-within .featureCard__media img,
