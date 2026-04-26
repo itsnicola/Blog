@@ -200,8 +200,66 @@ textarea {
     height: 100%;
 }
 
+.heroPanelImg {
+    opacity: 0;
+    transition: opacity 320ms ease;
+}
+
+.heroPanelImg.is-active {
+    opacity: 1;
+}
+
 .heroPanelImg img {
     object-fit: cover;
+}
+
+.heroCarousel {
+    position: absolute;
+    inset: 0;
+}
+
+.heroCarousel__control {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fffaf4;
+    cursor: pointer;
+    transform: translateY(-50%);
+    box-shadow: none;
+    transition: color 180ms ease, transform 180ms ease;
+}
+
+.heroCarousel__control:hover,
+.heroCarousel__control:focus-visible {
+    color: rgba(255, 250, 244, 0.72);
+}
+
+.heroCarousel__control--prev {
+    left: 1rem;
+}
+
+.heroCarousel__control--next {
+    right: 1rem;
+}
+
+.heroCarousel__control span {
+    display: block;
+    line-height: 1;
+}
+
+.heroCarousel__control img {
+    display: block;
+    width: 3.5rem;
+    height: 3.5rem;
+    filter: brightness(0) invert(1);
 }
 
 .heroPanel::before {
@@ -837,6 +895,28 @@ textarea {
     .heroPanel,
     .homeStrip {
         padding: 1.2rem;
+    }
+
+    .heroCarousel__control {
+        width: 2.2rem;
+        height: 2.2rem;
+    }
+
+    .heroCarousel__control--prev {
+        left: 0.75rem;
+    }
+
+    .heroCarousel__control--next {
+        right: 0.75rem;
+    }
+
+    .heroCarousel__control span {
+        line-height: 1;
+    }
+
+    .heroCarousel__control img {
+        width: 2.9rem;
+        height: 2.9rem;
     }
 
     .heroPanel__inner {

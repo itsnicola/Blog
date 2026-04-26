@@ -37,12 +37,30 @@
                     </nav>
                 </div>
 
-                {% if heroImage %}
+                {% if heroSlides or heroImage %}
                     <div class="heroPanel">
-                        <div class="heroPanelImg">
-                            <img src="{{ heroImage }}" alt="{{ heroImageAlt | default: title | default: 'Mrs & Mrs Maps' }}">
-                        </div>
+                        {% if heroSlides %}
+                            <div class="heroCarousel" data-hero-carousel data-autoplay-delay="5000">
+                                {% for slide in heroSlides %}
+                                    <div class="heroPanelImg{% if loop.first %} is-active{% endif %}" data-hero-slide{% if not loop.first %} aria-hidden="true"{% endif %}>
+                                        <img src="{{ slide.src }}" alt="{{ slide.alt | default: title | default: 'Mrs & Mrs Maps' }}">
+                                    </div>
+                                {% endfor %}
 
+                                {% if heroSlides.length > 1 %}
+                                    <button class="heroCarousel__control heroCarousel__control--prev" type="button" aria-label="Previous photo" data-hero-prev>
+                                        <span aria-hidden="true"><img src="/assets/icons/left.png" alt=""></span>
+                                    </button>
+                                    <button class="heroCarousel__control heroCarousel__control--next" type="button" aria-label="Next photo" data-hero-next>
+                                        <span aria-hidden="true"><img src="/assets/icons/right.png" alt=""></span>
+                                    </button>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="heroPanelImg is-active" data-hero-slide>
+                                <img src="{{ heroImage }}" alt="{{ heroImageAlt | default: title | default: 'Mrs & Mrs Maps' }}">
+                            </div>
+                        {% endif %}
                     </div>
                 {% endif %}
             </header>
@@ -79,9 +97,13 @@
                 }
             }
 
+            function getActiveHeroImage(hero) {
+                return hero?.querySelector(".heroPanelImg.is-active img") || hero?.querySelector(".heroPanelImg img");
+            }
+
             function applyHeroTone() {
                 const hero = document.querySelector(".heroPanel");
-                const image = hero?.querySelector(".heroPanel__media img");
+                const image = getActiveHeroImage(hero);
                 const copy = hero?.querySelector(".heroCopy");
 
                 if (!hero || !image || !copy || !image.complete || !image.naturalWidth || !image.naturalHeight) {
@@ -164,9 +186,67 @@
                 }
             }
 
+            function setupHeroCarousel() {
+                const carousel = document.querySelector("[data-hero-carousel]");
+                if (!carousel) {
+                    return;
+                }
+
+                const slides = Array.from(carousel.querySelectorAll("[data-hero-slide]"));
+                if (slides.length < 2) {
+                    return;
+                }
+
+                const delay = Number(carousel.dataset.autoplayDelay) || 5000;
+                let activeIndex = slides.findIndex((slide) => slide.classList.contains("is-active"));
+                let intervalId = null;
+
+                if (activeIndex < 0) {
+                    activeIndex = 0;
+                    slides[0].classList.add("is-active");
+                }
+
+                function showSlide(nextIndex) {
+                    activeIndex = (nextIndex + slides.length) % slides.length;
+
+                    slides.forEach((slide, index) => {
+                        const isActive = index === activeIndex;
+                        slide.classList.toggle("is-active", isActive);
+                        slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+                    });
+
+                    applyHeroTone();
+                }
+
+                function restartAutoPlay() {
+                    window.clearInterval(intervalId);
+                    intervalId = window.setInterval(() => {
+                        showSlide(activeIndex + 1);
+                    }, delay);
+                }
+
+                carousel.querySelector("[data-hero-prev]")?.addEventListener("click", () => {
+                    showSlide(activeIndex - 1);
+                    restartAutoPlay();
+                });
+
+                carousel.querySelector("[data-hero-next]")?.addEventListener("click", () => {
+                    showSlide(activeIndex + 1);
+                    restartAutoPlay();
+                });
+
+                carousel.addEventListener("mouseenter", () => window.clearInterval(intervalId));
+                carousel.addEventListener("mouseleave", restartAutoPlay);
+                carousel.addEventListener("focusin", () => window.clearInterval(intervalId));
+                carousel.addEventListener("focusout", restartAutoPlay);
+
+                restartAutoPlay();
+            }
+
             window.addEventListener("load", () => {
+                setupHeroCarousel();
                 applyHeroTone();
-                const heroImage = document.querySelector(".heroPanel__media img");
+                const heroImage = getActiveHeroImage(document.querySelector(".heroPanel"));
                 if (heroImage) {
                     heroImage.addEventListener("load", applyHeroTone);
                 }
