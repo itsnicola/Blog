@@ -19,7 +19,7 @@ pageClass: posts-page
                     <h2>{{ post.data.title | safe }}</h2>
                     <p class="archiveCard__meta">By {{ post.data.author | safe }}</p>
                     <div class="archiveCard__body">
-                        {{ post.templateContent | safe }}
+                        <p>{{ post.content | striptags | truncate(260) }}</p>
                     </div>
                 </div>
             </a>
