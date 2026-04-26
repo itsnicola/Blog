@@ -10,17 +10,19 @@ pageClass: posts-page
 <section class="archiveGrid">
     {%- for post in collections.posts | reverse %}
         <article class="archiveCard">
-            <div class="archiveCard__media">
-                <img src="{{ post.data.image | safe }}" alt="{{ post.data.title | safe }}">
-            </div>
-            <div class="archiveCard__content">
-                <span class="sectionTag">Destination journal</span>
-                <h2>{{ post.data.title | safe }}</h2>
-                <p class="archiveCard__meta">By {{ post.data.author | safe }}</p>
-                <div class="archiveCard__body">
-                    {{ post.templateContent | safe }}
+            <a class="archiveCard__link" href="{{ post.url | safe }}" aria-label="Read {{ post.data.title | safe }}">
+                <div class="archiveCard__media">
+                    <img src="{{ post.data.image | safe }}" alt="{{ post.data.title | safe }}">
                 </div>
-            </div>
+                <div class="archiveCard__content">
+                    <span class="sectionTag">Destination journal</span>
+                    <h2>{{ post.data.title | safe }}</h2>
+                    <p class="archiveCard__meta">By {{ post.data.author | safe }}</p>
+                    <div class="archiveCard__body">
+                        {{ post.templateContent | safe }}
+                    </div>
+                </div>
+            </a>
         </article>
     {%- endfor %}
 </section>

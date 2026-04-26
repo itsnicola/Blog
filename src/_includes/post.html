@@ -1,0 +1,20 @@
+---
+layout: layout.html
+pageClass: post-page
+---
+
+<article class="featureCard postFeature">
+    <div class="featureCard__media">
+        <span class="sectionTag">Destination journal</span>
+        <img src="{{ image }}" alt="{{ title }}">
+    </div>
+    <div class="featureCard__content">
+        <a class="postBackLink" href="/posts/">Back to posts</a>
+        <p class="featureCard__kicker">Field notes from the road</p>
+        <h1>{{ title }}</h1>
+        <p class="featureCard__meta">By {{ author }}</p>
+        <div class="featureCard__body postBody">
+            {{ content }}
+        </div>
+    </div>
+</article>
